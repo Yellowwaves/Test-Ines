@@ -1,0 +1,48 @@
+# Ce workflow exécute votre script Python de manière automatisée chaque matin.
+# Pour plus d'informations : https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Envoi du message matinal WhatsApp
+
+on:
+  schedule:
+    # S'exécute automatiquement tous les jours à 06h30 UTC 
+    # (Soit 07h30 en hiver / 08h30 en été en France)
+    - cron: '30 6 * * *'
+  workflow_dispatch: # Permet de déclencher le script manuellement depuis l'onglet Actions pour tester
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Récupérer le code du dépôt
+      uses: actions/checkout@v4
+
+    - name: Configurer Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Installer les dépendances
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Analyser le code avec flake8 (Lint)
+      run: |
+        # Arrête le build s'il y a des erreurs de syntaxe Python ou des variables indéfinies
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero traite les erreurs comme des avertissements.
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Exécuter le script d'envoi WhatsApp
+      env:
+        # Injection sécurisée de vos identifiants Twilio cachés dans les paramètres de votre projet GitHub
+        TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+        TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+      run: |
+        python script.py
