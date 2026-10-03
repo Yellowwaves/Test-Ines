@@ -34,7 +34,7 @@ notification = (
 )
 
 payload = {
-    # "app_id": os.environ["ONESIGNAL_APP_ID"],
+    "app_id": os.environ["ONESIGNAL_APP_ID"],
     "included_segments": ["Subscribed Users"],
     "headings": {
         "en": "❤️ Good Morning ❤️"
