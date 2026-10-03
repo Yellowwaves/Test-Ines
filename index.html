@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>❤️ Pour toi ❤️</title>
+    <title>Pour toi ❤️</title>
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "6629cea5-ab9d-4d25-86f3-6d2d33957a0c",
+        });
+      });
+    </script>
     <style>
         :root {
             --rose-1: #ff8fab;
@@ -175,19 +184,15 @@
     </div>
 
     <main class="card">
-        <div class="badge">Mon cœur</div>
-        <h1><span class="title-gradient">Coucou mon amour</span> ❤️</h1>
+        <h1><span class="title-gradient">Coucou mon amour</span></h1>
         <p>
-            Tu es la personne qui rend mes journées plus douces, mes jours plus lumineux,
-            et mon cœur plus heureux. 🥰
+            Voici un petit site qui a été fait rien que pour toi. J’espère qu’il te fera sourire.💖
         </p>
 
         <div class="actions">
             <button class="btn btn-primary" type="button">Autoriser les notifications</button>
             <button class="btn btn-secondary" type="button">Je t’aime fort</button>
         </div>
-
-        <p class="footer-note">Toujours là pour toi, avec toi, et pour toi.</p>
     </main>
 
     <script>
@@ -198,7 +203,7 @@
         });
 
         document.querySelector('.btn-secondary').addEventListener('click', function () {
-            this.textContent = '💖 Toujours ❤️';
+            this.textContent = 'Toujours ❤️';
         });
     </script>
 </body>
