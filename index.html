@@ -4,15 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pour toi ❤️</title>
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
-      window.OneSignalDeferred = window.OneSignalDeferred || [];
-      OneSignalDeferred.push(async function(OneSignal) {
-        await OneSignal.init({
-          appId: "6629cea5-ab9d-4d25-86f3-6d2d33957a0c",
-        });
-      });
-    </script>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+
+<script>
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+
+OneSignalDeferred.push(async function(OneSignal) {
+
+    await OneSignal.init({
+        appId: "6629cea5-ab9d-4d25-86f3-6d2d33957a0c"
+    });
+
+    console.log("Permission:",
+        OneSignal.Notifications.permission);
+
+    console.log("Subscription:",
+        OneSignal.User.PushSubscription.id);
+
+    console.log("OptedIn:",
+        OneSignal.User.PushSubscription.optedIn);
+
+    console.log("OneSignal ID:",
+        OneSignal.User.onesignalId);
+});
+</script>
     <style>
         :root {
             --rose-1: #ff8fab;
